@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Database\Eloquent\Model;
+use Database\Factories\ProductFactory;
 
 class Product extends Model
 {
