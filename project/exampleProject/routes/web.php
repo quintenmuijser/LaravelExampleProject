@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/categories', [CategoryController::class, 'Categories']);
+Route::get('/category/{id}', [CategoryController::class, 'Category']);
+
+Route::get('/products', [ProductController::class, 'Products']);
+Route::get('/product/{id}', [ProductController::class, 'Product']);
