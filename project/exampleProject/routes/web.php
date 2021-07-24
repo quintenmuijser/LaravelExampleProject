@@ -20,8 +20,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/categories', [CategoryController::class, 'Categories']);
-Route::get('/category/{id}', [CategoryController::class, 'Category']);
-
-Route::get('/products', [ProductController::class, 'Products']);
-Route::get('/product/{id}', [ProductController::class, 'Product']);
+Route::group(['prefix' => 'category'], function() {
+    Route::get('/all', [CategoryController::class, 'categories']);
+    Route::get('/{id}', [CategoryController::class, 'category']);
+}
+Route::group(['prefix' => 'product'], function() {
+    Route::get('/all', [ProductController::class, 'products']);
+    Route::get('/{id}', [ProductController::class, 'product']);
+}

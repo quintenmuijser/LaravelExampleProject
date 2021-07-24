@@ -9,11 +9,11 @@ use App\Product;
 
 class CategoryController extends Controller
 {
-    public function Categories() {
+    public function categories() {
         return view('category.categories', ['categories' => Category::all()]);
     }
 
-    public function Category($id) {
+    public function category($id) {
 
         // tries to fetch the category
         $category = Category::findOrFail($id);

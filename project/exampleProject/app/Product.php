@@ -24,7 +24,7 @@ class Product extends Model
         'updated_at'
     ];
 
-    public function Category() {
+    public function category() {
         return $this->belongsTo(Category::class, "category_id", "id");
     }
 }

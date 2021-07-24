@@ -8,11 +8,11 @@ use App\Product;
 
 class ProductController extends Controller
 {
-    public function Products() {
+    public function products() {
         $categories = Category::all();
 
         foreach($categories as $category) {
-            $category->products = Product::where("category_id", $category->id)
+            $category->products = Product::where('category_id', $category->id)
             ->orderBy('id')
             ->get();
         }
@@ -23,14 +23,14 @@ class ProductController extends Controller
         ]);
     }
 
-    public function Product($id) {
+    public function product($id) {
 
         // tries to fetch the category
         $product = Product::findOrFail($id);
 
         // gets all the products linked to the category
         $similar_products = Product::where('category_id', $product->category_id)
-        ->where("id", "!=", $product->id)
+        ->where('id', '!=', $product->id)
         ->orderBy('id')
         ->get();
 
