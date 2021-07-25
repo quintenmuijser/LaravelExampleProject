@@ -23,8 +23,9 @@ Route::get('/', function () {
 Route::group(['prefix' => 'category'], function() {
     Route::get('/all', [CategoryController::class, 'categories']);
     Route::get('/{id}', [CategoryController::class, 'category']);
-}
+});
+
 Route::group(['prefix' => 'product'], function() {
     Route::get('/all', [ProductController::class, 'products']);
     Route::get('/{id}', [ProductController::class, 'product']);
-}
+});
