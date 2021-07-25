@@ -11,7 +11,7 @@ $factory->define(Product::class, function (Faker $faker) {
     return [
         'category_id' => Category::all()->random()->id,
         'product_name' => $faker->unique()->name,
-        'product_description' => $faker->unique()->realText($maxNbChars = 200, $indexSize = 2),
+        'product_description' => $faker->unique()->realText($maxNbChars = 100, $indexSize = 2),
         'price' => $faker->randomFloat(2, 0, 100),
         'created_at' =>  now(),
         'updated_at' => now(),

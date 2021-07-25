@@ -1,3 +1,5 @@
-<footer>
-    <h4>Footer</h4>
+<footer style="background-color: lightgrey">
+    <div class="container">
+        <h4>Footer</h4>
+    </div>
 </footer>
