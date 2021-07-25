@@ -13,8 +13,9 @@ class CreateSessionsTable extends Migration
      */
     public function up()
     {
+        Schema::defaultStringLength(200);
         Schema::create('sessions', function (Blueprint $table) {
-            $table->id();
+            $table->string('id')->unique();
             $table->foreignId('user_id')->nullable();
             $table->string('ip_address')->nullable();
             $table->text('user_agent')->nullable();
