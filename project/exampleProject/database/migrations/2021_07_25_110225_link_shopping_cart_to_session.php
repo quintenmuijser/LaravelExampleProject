@@ -14,7 +14,7 @@ class LinkShoppingCartToSession extends Migration
     public function up()
     {
         Schema::table('shopping_carts', function (Blueprint $table) {
-            $table->integer('session_id')->unsigned()->after("id");;
+            $table->string('session_id')->after("id");;
             $table->foreign('session_id')->references('id')->on('sessions');
         });
     }

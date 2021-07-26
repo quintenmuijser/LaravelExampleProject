@@ -13,14 +13,16 @@
                 <div style="padding: 90px 0; background-color: #f8f8f9;" class="product-imitation"> [ PlaceHolder ]</div>
                 <p>{{ $product->product_description }}</p>
                 <div class="row">
-                    <form>
+                    <form action="{{ route('shoppingCart.store') }}" method="post">
+                        @csrf
                         <div class='col-sm-12 col-md-12 col-lg-12'>
                             <h4>$ {{ $product->price }}</h4>
                         </div>
                         <div class='col-sm-4 col-md-4 col-lg-4'>
-                            <input type="number" min="1" max="10" value="1" style="width: 100%;">
+                            <input name="amount" type="number" min="1" max="10" value="1" style="width: 100%;">
                         </div>
                         <div class='col-sm-8 col-md-8 col-lg-8'>
+                            <input name ="product_id" type="number" value="{{$product->id}}" hidden>
                             <input type="submit" value="Add to Cart" style="width:100%;">
                         </div>
                     </form>
