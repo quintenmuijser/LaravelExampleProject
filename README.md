@@ -9,12 +9,15 @@
 
 <h4>Controllers:<h4>
 <ul>
+    <li>ShoppingCartController</li>
     <li>ProductController</li>
     <li>CategoryController</li>
 </ul>
 
 <h4>Models:<h4>
 <ul>
+    <li>ShoppingCart</li>
+    <li>ShoppingCartItem</li>
     <li>Product</li>
     <li>Category</li>
 </ul>
@@ -39,15 +42,30 @@
     <li>update_product_table_properties</li>
     <li>update_category_table_properties</li>
     <li>link_products_to_categories</li>
+    <li>create_sessions_table</li>
+    <li>create_shopping_carts_table</li>
+    <li>link_shopping_carts_table</li>
+    <li>create_shopping_cart_products</li>
 </ul>
 
 <h4>Routes:<h4>
-<ul>
-    <li>/products</li>
-    <li>/product/{id}</li>
-    <li>/categories</li>
-    <li>/category/{id}</li>
-</ul>
+<p>
++--------+-----------+----------------------------------+----------------------+-----------------------------------------------------+------------+
+| Domain | Method    | URI                              | Name                 | Action                                              | Middleware |
++--------+-----------+----------------------------------+----------------------+-----------------------------------------------------+------------+
+|        | GET|HEAD  | category/all                     |                      | App\Http\Controllers\CategoryController@categories  | web        |
+|        | GET|HEAD  | category/{id}                    |                      | App\Http\Controllers\CategoryController@category    | web        |
+|        | GET|HEAD  | product/all                      |                      | App\Http\Controllers\ProductController@products     | web        |
+|        | GET|HEAD  | product/{id}                     |                      | App\Http\Controllers\ProductController@product      | web        |
+|        | GET|HEAD  | shoppingCart                     | shoppingCart.index   | App\Http\Controllers\ShoppingCartController@index   | web        |
+|        | POST      | shoppingCart                     | shoppingCart.store   | App\Http\Controllers\ShoppingCartController@store   | web        |
+|        | GET|HEAD  | shoppingCart/create              | shoppingCart.create  | App\Http\Controllers\ShoppingCartController@create  | web        |
+|        | GET|HEAD  | shoppingCart/{shoppingCart}      | shoppingCart.show    | App\Http\Controllers\ShoppingCartController@show    | web        |
+|        | PUT|PATCH | shoppingCart/{shoppingCart}      | shoppingCart.update  | App\Http\Controllers\ShoppingCartController@update  | web        |
+|        | DELETE    | shoppingCart/{shoppingCart}      | shoppingCart.destroy | App\Http\Controllers\ShoppingCartController@destroy | web        |
+|        | GET|HEAD  | shoppingCart/{shoppingCart}/edit | shoppingCart.edit    | App\Http\Controllers\ShoppingCartController@edit    | web        |
++--------+-----------+----------------------------------+----------------------+-----------------------------------------------------+------------+
+<li>
 
 # Future planned content:
 1. Create a header / footer and apply styling to the current pages
