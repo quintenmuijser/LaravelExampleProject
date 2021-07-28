@@ -9,14 +9,16 @@
             <div style="padding: 90px 0; background-color: #f8f8f9;" class="product-imitation text-center"> [ PlaceHolder ]</div>
         </div>
         <div class='col-sm-12 col-md-5 col-lg-5'>
-            <form>
+            <form action="{{ route('shoppingCart.store') }}" method="post">
+                @csrf
                 <div class='col-sm-12 col-md-12 col-lg-12'>
                     <h4>$ {{ $product->price }}</h4>
                 </div>
-                <div class='col-sm-3 col-md-3 col-lg-3'>
-                    <input type="number" min="1" max="10" value="1" style="width: 100%;">
+                <div class='col-sm-4 col-md-4 col-lg-4'>
+                    <input name="amount" type="number" min="1" max="10" value="1" style="width: 100%;">
                 </div>
-                <div class='col-sm-9 col-md-9 col-lg-9'>
+                <div class='col-sm-8 col-md-8 col-lg-8'>
+                    <input name ="product_id" type="number" value="{{$product->id}}" hidden>
                     <input type="submit" value="Add to Cart" style="width:100%;">
                 </div>
             </form>

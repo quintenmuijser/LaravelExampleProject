@@ -31,7 +31,7 @@
                 @method("PUT")
 
                 <input name="product_id" type="number" value="{{$item->product_id}}" hidden>
-                <input name="amount" type="number" value="{{$item->amount}}" min="1" max="10">
+                <input name="amount" type="number" value="{{$item->amount}}" min="1" max="100">
                 <input type="submit" value="Update Cart">
             </form>
         </div>

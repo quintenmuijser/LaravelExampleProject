@@ -11,21 +11,25 @@ use Session;
 class ShoppingCartController extends Controller
 {
     public function index(Request $request) {  
-        $session_id = Session::getId();
 
-        $cart = ShoppingCart::where('session_id', $session_id)->limit(1)->get();
-        if(empty($cart[0])) {
+        $cart = ShoppingCart::where('session_id', Session::getId())->First();
+        if($cart == null) {
             $cart = $this->create();
         }
 
-        $items = $cart[0]->shoppingCartItems()->get();
-        foreach($items as $item) {
-            $product = Product::where('id', $item->product_id)->limit(1)->get()[0];
-            $item->name = $product->product_name;
-            $item->description = $product->product_description;
-            $item->price = $product->price;
+        $items = $cart->shoppingCartItems()->get();
+        if($items != null) {
+            foreach($items as $item) {
+                $product = Product::where('id', $item->product_id)->limit(1)->get()[0];
+                $item->name = $product->product_name;
+                $item->description = $product->product_description;
+                $item->price = $product->price;
+            }
         }
-        
+        else {
+            $items = [];
+        }
+
         return view('shoppingcart.shoppingcart', [
             'shoppingCart' => $cart,
             'items' => $items 
@@ -34,27 +38,21 @@ class ShoppingCartController extends Controller
    
     public function create() {  
         try {
-            $session_id = Session::getId();
-
             $shoppingCart = new ShoppingCart;
-
             $shoppingCart->session_id = Session::getId();
-    
             $shoppingCart->save();
-            return ShoppingCart::where('session_id', $session_id)->get();
+            return ShoppingCart::where('session_id', Session::getId())->firstOrFail();
         } catch (Throwable $e) {
-            return [];
+            return null;
         }
     }  
     
     public function store(Request $request) {  
-        $session_id = Session::getId();
         //Create and use a validator here in future to check input 
 
 
         // Create a check here to see if shopping cart exsists
-        $shoppingCart = ShoppingCart::where("session_id", $session_id)->get()[0];
-
+        $shoppingCart = ShoppingCart::where("session_id", Session::getId())->first();
 
         // check if we have to store or update the cart
 
