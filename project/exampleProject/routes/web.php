@@ -22,7 +22,9 @@ Route::get('/', function () {
 });
 
 // CRUD operations for shoppingcart
-Route::resource('shoppingCart', "ShoppingCartController");
+Route::resource('shoppingCart', 'ShoppingCartController')->only([
+    'index', 'create', 'store', 'edit', 'update', 'destroy'
+]);
 
 // Category pages
 Route::group(['prefix' => 'category'], function() {

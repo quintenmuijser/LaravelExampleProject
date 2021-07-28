@@ -14,6 +14,7 @@ class CreateShoppingCartProducts extends Migration
     public function up()
     {
         Schema::create('shopping_cart_products', function (Blueprint $table) {
+            $table->id();
             $table->integer('shopping_cart_id');
             $table->integer('product_id');
             $table->integer('amount');

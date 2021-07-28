@@ -26,16 +26,19 @@
             <h5>$ {{$item->price}}</h5>
         </div>
         <div class="col-lg-2 col-md-2 col-sm-2">
-            <form action="" method="post">
+            <form action="{{ route('shoppingCart.update', ['shoppingCart'=>$item->product_id]) }}" method="post">
                 @csrf
+                @method("PUT")
+
                 <input name="product_id" type="number" value="{{$item->product_id}}" hidden>
                 <input name="amount" type="number" value="{{$item->amount}}" min="1" max="10">
                 <input type="submit" value="Update Cart">
             </form>
         </div>
         <div class="col-lg-2 col-md-2 col-sm-2">
-            <form action="" method="post">
+            <form action="{{ route('shoppingCart.destroy', ['shoppingCart'=>$item->product_id]) }}" method="post">
                 @csrf
+                @method("DELETE")
                 <input type="number" value="1" hidden>
                 <input type="submit" value="Remove From Cart">
             </form>

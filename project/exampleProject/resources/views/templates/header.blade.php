@@ -15,7 +15,7 @@
             </div>
 
             <div style="border: black solid 1px; min-height:50px;" class="col-lg-1 col-md-1 col-sm-1">
-                <a href="/shoppingCart">Items in cart: 0</a>
+                <a href="/shoppingCart">Items in cart: {{ count($cart->items) }}</a>
             </div>
 
         </div>

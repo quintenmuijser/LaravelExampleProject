@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShoppingCartItem extends Model
 {
+
     public $table = 'shopping_cart_products';
 
     protected $dates = [
@@ -21,6 +22,10 @@ class ShoppingCartItem extends Model
     ];
 
     public function shoppingCart() {
-        return $this->belongsTo(ShoppingCartItem::class, 'shopping_cart_id');
+        return $this->belongsToMany(ShoppingCartItem::class, 'id', 'shopping_cart_id');
+    }
+
+    public function items() {
+        return $this->hasMany(Product::class);
     }
 }

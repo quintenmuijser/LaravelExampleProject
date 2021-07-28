@@ -13,12 +13,12 @@ class ShoppingCartController extends Controller
     public function index(Request $request) {  
         $session_id = Session::getId();
 
-        $data = ShoppingCart::where('session_id', $session_id)->limit(1)->get()[0];
-        if(empty($data)) {
-            $data = $this->create();
+        $cart = ShoppingCart::where('session_id', $session_id)->limit(1)->get();
+        if(empty($cart[0])) {
+            $cart = $this->create();
         }
 
-        $items = $data->shoppingCartItems()->get();
+        $items = $cart[0]->shoppingCartItems()->get();
         foreach($items as $item) {
             $product = Product::where('id', $item->product_id)->limit(1)->get()[0];
             $item->name = $product->product_name;
@@ -27,7 +27,7 @@ class ShoppingCartController extends Controller
         }
         
         return view('shoppingcart.shoppingcart', [
-            'shoppingCart' => $data,
+            'shoppingCart' => $cart,
             'items' => $items 
         ]);
     }  
@@ -41,7 +41,7 @@ class ShoppingCartController extends Controller
             $shoppingCart->session_id = Session::getId();
     
             $shoppingCart->save();
-            return ShoppingCart::where("session_id", $session_id)->get();
+            return ShoppingCart::where('session_id', $session_id)->get();
         } catch (Throwable $e) {
             return [];
         }
@@ -52,58 +52,57 @@ class ShoppingCartController extends Controller
         //Create and use a validator here in future to check input 
 
 
-        // Create a check here to see if it exsists
+        // Create a check here to see if shopping cart exsists
         $shoppingCart = ShoppingCart::where("session_id", $session_id)->get()[0];
 
-        $shoppingCartItem = new ShoppingCartItem;
 
-        $shoppingCartItem->shopping_cart_id = $shoppingCart->id;
-        $shoppingCartItem->product_id = $request->product_id;
-        $shoppingCartItem->amount = $request->amount;
-        $shoppingCartItem->save();
+        // check if we have to store or update the cart
 
-        return $shoppingCartItem;
-    }  
-   
-    public function show($id) {  
-        try {
-            // Validate the value...
-        } catch (Throwable $e) {
-            report($e);
-    
-            return false;
+        if ($shoppingCart->shoppingCartItems()->where("product_id", $request->product_id)->get()->isEmpty()) {
+            $shoppingCartItem = new ShoppingCartItem;
+
+            $shoppingCartItem->shopping_cart_id = $shoppingCart->id;
+            $shoppingCartItem->product_id = $request->product_id;
+            $shoppingCartItem->amount = $request->amount;
+            $shoppingCartItem->save();
         }
-        return view('shoppingcart.shoppingcart', []);
-    }  
-    
+        else {
+            $shoppingCartItem = $shoppingCart->shoppingCartItems()->where("product_id", $request->product_id)->get()[0];
+            $shoppingCartItem->amount = ($shoppingCartItem->amount + $request->amount);
+            $shoppingCartItem->update();
+        }
+
+        // possible in future to redirect with a notification aswell
+        return back();
+    }
 
     public function edit($id) {  
-        try {
-            
-        } catch (Throwable $e) {
-            report($e);
-    
-            return false;
-        }
+        $shoppingCart = ShoppingCart::where('session_id', $session_id)->get()[0];
+        $shoppingCart->shoppingCartItems()->where('product_id', $id)->get()[0];
+        dd($request);
+        // possible in future to redirect with a notification aswell
+        return back();
     }  
    
     public function update(Request $request, $id)  {  
-        try {
-            // Validate the value...
-        } catch (Throwable $e) {
-            report($e);
-    
-            return false;
-        }
+        $session_id = Session::getId();
+
+        $shoppingCart = ShoppingCart::where('session_id', $session_id)->get()[0];
+        $item = $shoppingCart->shoppingCartItems()->where('product_id', $id)->get()[0];
+        $item->amount = $request->amount;
+        $item->update();
+        // possible in future to redirect with a notification aswell
+        return back();
     }  
    
     public function destroy($id) {  
-        try {
-            // Validate the value...
-        } catch (Throwable $e) {
-            report($e);
-    
-            return false;
-        }
+        $session_id = Session::getId();
+
+        // Create a check here to see if shopping cart exsists
+        $shoppingCart = ShoppingCart::where('session_id', $session_id)->get()[0];
+        $shoppingCart->shoppingCartItems()->where('product_id', $id)->get()[0]->delete();
+
+        // possible in future to redirect with a notification aswell
+        return back();
     }  
 }
