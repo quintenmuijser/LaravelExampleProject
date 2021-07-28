@@ -27,13 +27,13 @@ Route::resource('shoppingCart', 'ShoppingCartController')->only([
 ]);
 
 // Category pages
-Route::group(['prefix' => 'category'], function() {
-    Route::get('/all', [CategoryController::class, 'categories']);
-    Route::get('/{id}', [CategoryController::class, 'category']);
+Route::group(['prefix' => 'category', 'as' => 'category.'], function() {
+    Route::get('/all', [CategoryController::class, 'categories'])->name('all');
+    Route::get('/{id}', [CategoryController::class, 'category'])->name("byId");
 });
 
 // Product
-Route::group(['prefix' => 'product'], function() {
-    Route::get('/all', [ProductController::class, 'products']);
-    Route::get('/{id}', [ProductController::class, 'product']);
+Route::group(['prefix' => 'product', 'as' => 'product.'], function() {
+    Route::get('/all', [ProductController::class, 'products'])->name('all');
+    Route::get('/{id}', [ProductController::class, 'product'])->name("byId");
 });
